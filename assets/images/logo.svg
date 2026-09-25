@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="teaGreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#006b32" />
+      <stop offset="100%" stop-color="#004d23" />
+    </linearGradient>
+    <linearGradient id="yellowBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEE58" />
+      <stop offset="100%" stop-color="#FDB813" />
+    </linearGradient>
+    <linearGradient id="redPociGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E51C23" />
+      <stop offset="100%" stop-color="#C60B12" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Top Poci Box -->
+  <g id="top-box" filter="url(#shadow)">
+    <!-- Yellow Box -->
+    <rect x="150" y="30" width="200" height="155" rx="8" fill="#FFF200" stroke="#E51C23" stroke-width="4"/>
+    
+    <!-- Red TEH & Cap -->
+    <text x="175" y="85" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="34" fill="#E51C23" letter-spacing="1">TEH</text>
+    <text x="185" y="112" font-family="'Brush Script MT', cursive, 'Dancing Script', sans-serif" font-style="italic" font-weight="bold" font-size="24" fill="#E51C23">Cap</text>
+    
+    <!-- Teapot Drawing -->
+    <g transform="translate(255, 42) scale(0.65)">
+      <!-- Teapot body -->
+      <path d="M 65 35 C 45 35 25 55 25 80 C 25 105 45 125 75 125 C 105 125 125 105 125 80 C 125 55 105 35 85 35 Z" fill="#E51C23"/>
+      <!-- Teapot base -->
+      <path d="M 45 120 L 105 120 L 100 132 L 50 132 Z" fill="#E51C23"/>
+      <!-- Teapot spout -->
+      <path d="M 30 75 C 5 70 -5 50 5 40 C 12 35 15 45 25 55 Z" fill="#E51C23"/>
+      <!-- Teapot handle -->
+      <path d="M 120 55 C 150 55 150 105 120 105 C 110 105 110 95 125 95 C 135 95 135 65 120 65 Z" fill="#E51C23"/>
+      <!-- Teapot lid & knob -->
+      <ellipse cx="75" cy="35" rx="28" ry="8" fill="#E51C23"/>
+      <ellipse cx="75" cy="24" rx="8" ry="8" fill="#E51C23"/>
+      <!-- Engraving lines inside teapot (white details) -->
+      <path d="M 40 75 Q 75 85 110 75 M 45 90 Q 75 100 105 90" stroke="#FFF" stroke-width="2.5" fill="none" opacity="0.8"/>
+    </g>
+
+    <!-- Red Banner with White POCI -->
+    <rect x="150" y="125" width="200" height="60" rx="4" fill="url(#redPociGrad)"/>
+    <text x="250" y="170" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">POCI</text>
+  </g>
+
+  <!-- Green Main Shape for ES TEH -->
+  <g id="main-badge" filter="url(#shadow)">
+    <!-- Yellow Outer Ring -->
+    <path d="M 50 200 C 150 170 350 170 450 200 C 470 280 470 340 450 400 C 350 435 150 435 50 400 C 30 340 30 280 50 200 Z" fill="#FFD100"/>
+    
+    <!-- Dark Forest Green Center -->
+    <path d="M 58 208 C 152 180 348 180 442 208 C 460 280 460 336 442 392 C 348 424 152 424 58 392 C 40 336 40 280 58 208 Z" fill="url(#teaGreenGrad)"/>
+
+    <!-- Left Text "Es" -->
+    <text x="125" y="340" font-family="'Arial Black', 'Montserrat', sans-serif" font-weight="900" font-size="115" fill="#FFFFFF" text-anchor="middle">Es</text>
+
+    <!-- Center Fresh Tea Leaves with White Ribs -->
+    <g transform="translate(195, 225) scale(0.95)">
+      <!-- Leaf 1 (Left tilted) -->
+      <path d="M 40 120 C 10 90 0 50 30 10 C 60 40 65 90 40 120 Z" fill="#4CAF50" stroke="#FFFFFF" stroke-width="3"/>
+      <path d="M 35 110 Q 30 60 30 15" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+      <path d="M 32 75 L 18 65 M 31 55 L 15 45 M 31 35 L 20 28" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M 33 85 L 48 75 M 32 65 L 50 55 M 31 45 L 45 38" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      
+      <!-- Leaf 2 (Right smaller) -->
+      <path d="M 45 125 C 55 100 85 75 90 45 C 95 70 85 105 45 125 Z" fill="#66BB6A" stroke="#FFFFFF" stroke-width="3"/>
+      <path d="M 50 120 Q 70 85 88 50" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+      <path d="M 60 100 L 72 90 M 70 80 L 82 72" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Right Text "Teh" -->
+    <text x="350" y="340" font-family="'Arial Black', 'Montserrat', sans-serif" font-weight="900" font-size="115" fill="#FFFFFF" text-anchor="middle">Teh</text>
+  </g>
+
+  <!-- MIDE Badge Ribbon underneath -->
+  <g transform="translate(250, 440)" filter="url(#shadow)">
+    <rect x="-95" y="-18" width="190" height="38" rx="19" fill="#E51C23" stroke="#FFD100" stroke-width="3"/>
+    <text x="0" y="8" font-family="'Arial Black', Impact, sans-serif" font-size="22" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="4">M I D E</text>
+  </g>
+</svg>

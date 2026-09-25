@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Es Teh Poci Mide - Segarnya Teh Asli Indonesia | Pesan Online Cepat</title>
+  <meta name="description" content="Nikmati kesegaran otentik Es Teh Poci Mide dengan racikan daun teh melati pilihan dan poci tanah liat. Pesan online dine-in, takeaway, atau delivery dengan cepat dan praktis ala Mie Gacoan.">
+  <meta name="keywords" content="Es Teh Poci, Es Teh Poci Mide, Pesan Online, Teh Melati, Minuman Segar, Mie Gacoan Style">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. TOP ANNOUNCEMENT BAR -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="ticker">
+        <span class="pulse-dot"></span>
+        <span>🎉 PROMO SPESIAL: Gunakan kode <b>POCISEGAR</b> untuk potongan Rp 5.000! Siap saji 5-10 menit.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. NAVBAR -->
+  <header class="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="#beranda" class="brand-logo">
+          <img src="assets/images/logo.svg" alt="Es Teh Poci Mide Logo">
+          <div class="brand-text">
+            <h1>ES TEH POCI</h1>
+            <span>M I D E • CABANG UTAMA</span>
+          </div>
+        </a>
+
+        <!-- Store Context & Status -->
+        <div class="outlet-badge">
+          <span class="status-led"></span>
+          <span>Outlet Buka • Estimasi <b>5-10 mnt</b></span>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="nav-links">
+          <a href="#beranda" class="nav-link active">Beranda</a>
+          <a href="#menuCatalog" class="nav-link">Menu Lengkap</a>
+          <a href="#promoSection" class="nav-link">Promo & Voucher</a>
+          <a href="#tentangKami" class="nav-link">Tentang Kami</a>
+          <a href="#lokasiOutlet" class="nav-link">Lokasi</a>
+        </nav>
+
+        <!-- Action Buttons (Purely Customer Focused) -->
+        <div class="nav-actions">
+          <button class="btn-cart-nav" onclick="AppState.openCartDrawer()" id="navCartBtn">
+            <span>🛒</span>
+            <span>Pesanan</span>
+            <span class="cart-count-badge" id="navCartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. HERO SECTION -->
+  <section class="hero" id="beranda">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span>🍃 100% Seduhan Daun Teh Melati Pilihan</span>
+          </div>
+          <h1 class="hero-title">
+            Nikmati Kesegaran <br>
+            <span class="highlight-yellow">Es Teh Poci Mide</span> <br>
+            Harga Hemat, <span class="highlight-red">Puas Maksimal!</span>
+          </h1>
+          <p class="hero-desc">
+            Racikan teh harum otentik poci tanah liat dipadukan dengan sensasi buah tropis segar, macchiato cheese, dan dimsum krispi ala resto kekinian. Pesan tanpa antre!
+          </p>
+
+          <!-- Order Mode Selector (Mie Gacoan Style) -->
+          <div class="order-mode-selector">
+            <div class="order-mode-header">
+              <span>📍 Tentukan Metode Pesanan Anda:</span>
+              <span style="font-size: 0.75rem; color: #15803d; font-weight: 800;">Outlet: Jl. Pahlawan No. 45</span>
+            </div>
+            
+            <div class="order-tabs">
+              <button class="order-tab-btn active" data-mode="dine_in">
+                <span>🍽️</span>
+                <span>Dine-In</span>
+              </button>
+              <button class="order-tab-btn" data-mode="takeaway">
+                <span>🥡</span>
+                <span>Bungkus</span>
+              </button>
+              <button class="order-tab-btn" data-mode="delivery">
+                <span>🛵</span>
+                <span>Delivery</span>
+              </button>
+            </div>
+
+            <div class="order-mode-field" id="heroModeFields">
+              <input type="text" id="heroTableNumber" placeholder="Nomor Meja Anda (misal: 07)" value="07">
+              <button class="btn-hero-cta" onclick="AppState.scrollToMenu()">Pesan Sekarang →</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="assets/images/hero-banner.jpg" alt="Segarnya Es Teh Poci Mide">
+          <div class="floating-taste-badge">
+            <div class="taste-badge-icon">🫖</div>
+            <div class="taste-badge-text">
+              <strong>Aroma Melati Wangi Alami</strong>
+              <span>Diseduh Segar Setiap Hari</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PROMO & VOUCHER CAROUSEL -->
+  <section class="promo-strip" id="promoSection">
+    <div class="container">
+      <div class="promo-cards-scroll">
+        <!-- Voucher 1 -->
+        <div class="promo-card">
+          <div class="promo-content">
+            <h4>KODE: POCISEGAR</h4>
+            <p>Potongan langsung Rp 5.000 untuk minimal belanja Rp 15.000.</p>
+          </div>
+          <button class="promo-claim-btn" onclick="AppState.applyPromoCode('POCISEGAR'); AppState.openCartDrawer();">
+            KLAIM
+          </button>
+        </div>
+
+        <!-- Voucher 2 -->
+        <div class="promo-card">
+          <div class="promo-content">
+            <h4>KODE: GACOANMIDE</h4>
+            <p>Diskon 15% untuk pemesanan menu teh susu & dimsum!</p>
+          </div>
+          <button class="promo-claim-btn" onclick="AppState.applyPromoCode('GACOANMIDE'); AppState.openCartDrawer();">
+            KLAIM
+          </button>
+        </div>
+
+        <!-- Voucher 3 -->
+        <div class="promo-card">
+          <div class="promo-content">
+            <h4>KODE: FREEONGKIR</h4>
+            <p>Gratis biaya kirim s/d Rp 5.000 untuk delivery terdekat.</p>
+          </div>
+          <button class="promo-claim-btn" onclick="AppState.applyPromoCode('FREEONGKIR'); AppState.openCartDrawer();">
+            KLAIM
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. STICKY CATEGORY & SEARCH BAR -->
+  <div class="category-sticky-bar">
+    <div class="container">
+      <div class="category-wrapper">
+        <div class="category-pills">
+          <button class="cat-pill active" data-cat="all">Semua Menu</button>
+          <button class="cat-pill" data-cat="bestseller">🔥 Paling Laris</button>
+          <button class="cat-pill" data-cat="original">🍵 Teh Original Poci</button>
+          <button class="cat-pill" data-cat="fruit">🍋 Fruity Tea Series</button>
+          <button class="cat-pill" data-cat="milky">🥛 Milky & Macchiato</button>
+          <button class="cat-pill" data-cat="snack">🥟 Dimsum & Snack</button>
+          <button class="cat-pill" data-cat="combo">🎉 Paket Hemat</button>
+        </div>
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="menuSearchInput" placeholder="Cari es teh, leci, pangsit...">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. MENU CATALOG SECTION -->
+  <main class="menu-section" id="menuCatalog">
+    <div class="container">
+      <div class="section-heading">
+        <div class="title-area">
+          <h2>Daftar Menu Es Teh Poci Mide</h2>
+          <p>Pilih minuman favoritmu, sesuaikan tingkat gula, es, dan topping sesuai selera!</p>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsContainer">
+        <!-- Rendered via app.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- 7. ABOUT & BRAND STORY -->
+  <section class="container" id="tentangKami">
+    <div class="about-section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-img-box">
+            <img src="assets/images/menu-showcase.jpg" alt="Varian Es Teh Poci Mide & Dimsum">
+            <div class="about-badge-exp">
+              <h3>100%</h3>
+              <p>Otentik & Higienis</p>
+            </div>
+          </div>
+          <div class="about-content">
+            <h3 class="sub-title">Tradisi Bertemu Modernitas</h3>
+            <h2>Kenikmatan Teh Asli Indonesia dengan Sensasi Masa Kini</h2>
+            <p>
+              <b>Es Teh Poci Mide</b> menghadirkan cita rasa teh khas Nusantara dengan metode penyeduhan tradisional menggunakan poci tanah liat. Menghasilkan aroma melati yang pekat, sejuk, dan tidak pahit di tenggorokan.
+            </p>
+            <p>
+              Dipadukan dengan inovasi rasa kekinian seperti cheese cream macchiato, buah segar asli, serta pendamping dimsum pangsit goreng renyah yang bikin nagih!
+            </p>
+            
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-icon">🍵</div>
+                <div class="feature-info">
+                  <h5>Poci Tanah Liat Alami</h5>
+                  <p>Menjaga kemurnian aroma & suhu teh.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-info">
+                  <h5>Sistem Pesan Cepat</h5>
+                  <p>Pesan langsung dari meja tanpa antre kasir.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">🌱</div>
+                <div class="feature-info">
+                  <h5>Gula Asli Tanpa Biang</h5>
+                  <p>Manis pas dan ramah untuk tenggorokan.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon">💰</div>
+                <div class="feature-info">
+                  <h5>Harga Terjangkau</h5>
+                  <p>Mulai Rp 4.000 sudah bisa nikmati kesegaran.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. OUTLET LOCATIONS & CONTACT -->
+  <section class="locations-section" id="lokasiOutlet">
+    <div class="container">
+      <div class="section-heading">
+        <div class="title-area">
+          <h2>Lokasi & Jam Operasional</h2>
+          <p>Kunjungi gerai terdekat kami atau pesan langsung secara online.</p>
+        </div>
+      </div>
+
+      <div class="outlet-cards">
+        <div class="outlet-box">
+          <div>
+            <h4>Outlet Mide - Cabang Pusat</h4>
+            <p>Jl. Pahlawan No. 45, Sentra Kuliner Nusantara (Depan Alun-Alun)</p>
+            <div class="outlet-timings">
+              <span>⏰ Buka Setiap Hari: 09:00 - 22:00 WIB</span>
+            </div>
+          </div>
+          <div class="outlet-actions">
+            <a href="https://maps.google.com" target="_blank" class="btn-outlet-map">📍 Buka di Google Maps</a>
+            <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Es%20Teh%20Poci%20Mide" target="_blank" class="btn-outlet-wa">💬 WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="outlet-box">
+          <div>
+            <h4>Outlet Mide - Kampus Branch</h4>
+            <p>Jl. Raya Pendidikan No. 12, Samping Universitas Terbuka</p>
+            <div class="outlet-timings">
+              <span>⏰ Buka Setiap Hari: 08:30 - 21:30 WIB</span>
+            </div>
+          </div>
+          <div class="outlet-actions">
+            <a href="https://maps.google.com" target="_blank" class="btn-outlet-map">📍 Buka di Google Maps</a>
+            <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Es%20Teh%20Poci%20Mide" target="_blank" class="btn-outlet-wa">💬 WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/images/logo.svg" alt="Es Teh Poci Mide">
+          <p>Es Teh Poci Mide adalah penyedia minuman es teh legendaris Indonesia yang dikemas secara modern dengan pilihan rasa bervariasi dan harga bersahabat.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Kategori Menu</h5>
+          <ul>
+            <li><a href="#menuCatalog">Teh Melati Original</a></li>
+            <li><a href="#menuCatalog">Fruity Jasmine Series</a></li>
+            <li><a href="#menuCatalog">Macchiato & Milk Tea</a></li>
+            <li><a href="#menuCatalog">Dimsum & Pangsit</a></li>
+            <li><a href="#menuCatalog">Paket Hemat Combo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Layanan Cepat</h5>
+          <ul>
+            <li><a href="javascript:void(0)" onclick="AppState.openCartDrawer()">Keranjang Belanja</a></li>
+            <li><a href="javascript:void(0)" onclick="AppState.openTrackingModal()">Cek Status Pesanan</a></li>
+            <li><a href="access_admin.html" target="_blank" style="color:var(--text-light); font-size:0.8rem;">Portal Staf & Kasir ↗</a></li>
+            <li><a href="#lokasiOutlet">Syarat Kemitraan Franchise</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Hubungi Kami</h5>
+          <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:0.75rem;">
+            📞 WhatsApp CS: 0812-3456-7890<br>
+            ✉️ Email: halo@estehpocimide.com<br>
+            📸 Instagram: @estehpoci_mide
+          </p>
+          <div style="font-size: 0.8rem; color: var(--yellow);">
+            Didukung oleh Platform Laravel & MySQL System.
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Es Teh Poci Mide. Hak Cipta Dilindungi Undang-Undang.</div>
+        <div>Model Pemesanan Interaktif Terinspirasi Gaya Mie Gacoan.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 10. STICKY FLOATING CART BAR -->
+  <div class="floating-cart-bar" id="floatingCartBar">
+    <div class="cart-bar-info">
+      <span class="cart-bar-badge" id="floatingCartCount">0 Item</span>
+      <div class="cart-bar-pricing">
+        <h5 id="floatingCartPrice">Rp 0</h5>
+        <span>Sudah termasuk poci cup & seal</span>
+      </div>
+    </div>
+    <button class="btn-view-order" onclick="AppState.openCartDrawer()">
+      <span>Lihat Pesanan</span>
+      <span>→</span>
+    </button>
+  </div>
+
+  <!-- 11. MIE GACOAN-STYLE PRODUCT CUSTOMIZATION MODAL -->
+  <div class="modal-overlay" id="customizeModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="AppState.closeProductModal()">✕</button>
+      <img src="assets/images/hero-banner.jpg" id="modalProductImg" class="modal-banner-img" alt="Product Image">
+      
+      <div class="modal-content-body">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div>
+            <h3 class="modal-item-title" id="modalProductTitle">Nama Minuman</h3>
+            <p class="modal-item-desc" id="modalProductDesc">Deskripsi rasa dan racikan teh</p>
+          </div>
+          <span style="font-size:1.2rem; font-weight:900; color:var(--primary);" id="modalBasePrice">Rp 4.000</span>
+        </div>
+
+        <!-- Customization Fields for Drinks -->
+        <div id="drinkCustomizationFields">
+          <!-- Size Selector -->
+          <div class="option-group">
+            <div class="option-group-title">
+              <span>Ukuran Cup</span>
+              <span class="badge-req">Wajib</span>
+            </div>
+            <div class="option-chips-grid">
+              <label class="option-chip selected">
+                <input type="radio" name="cupSize" value="reguler" checked>
+                <span class="chip-name">Reguler (16oz)</span>
+                <span class="chip-sub">+Rp 0</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="cupSize" value="jumbo">
+                <span class="chip-name">Jumbo (22oz) 🔥</span>
+                <span class="chip-sub">+Rp 2.000</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Sugar Level -->
+          <div class="option-group">
+            <div class="option-group-title">
+              <span>Tingkat Kemanisan (Sugar Level)</span>
+              <span class="badge-req">Wajib</span>
+            </div>
+            <div class="option-chips-grid">
+              <label class="option-chip selected">
+                <input type="radio" name="sugarLevel" value="normal" checked>
+                <span class="chip-name">Normal (100%)</span>
+                <span class="chip-sub">Rekomendasi</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="sugarLevel" value="less">
+                <span class="chip-name">Less Sugar (70%)</span>
+                <span class="chip-sub">Manis Pas</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="sugarLevel" value="half">
+                <span class="chip-name">Sedikit (30%)</span>
+                <span class="chip-sub">Light Sweet</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="sugarLevel" value="zero">
+                <span class="chip-name">No Sugar (0%)</span>
+                <span class="chip-sub">Teh Tawar</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Ice Level -->
+          <div class="option-group">
+            <div class="option-group-title">
+              <span>Pilihan Es Batu (Ice Level)</span>
+              <span class="badge-req">Wajib</span>
+            </div>
+            <div class="option-chips-grid">
+              <label class="option-chip selected">
+                <input type="radio" name="iceLevel" value="normal" checked>
+                <span class="chip-name">Normal Ice 🧊</span>
+                <span class="chip-sub">Segar Dingin</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="iceLevel" value="less">
+                <span class="chip-name">Less Ice</span>
+                <span class="chip-sub">Sedikit Es</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="iceLevel" value="extra">
+                <span class="chip-name">Extra Ice ❄️</span>
+                <span class="chip-sub">Super Dingin</span>
+              </label>
+              <label class="option-chip">
+                <input type="radio" name="iceLevel" value="none">
+                <span class="chip-name">Tanpa Es</span>
+                <span class="chip-sub">Suhu Ruang</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Topping Checkbox Options -->
+          <div class="option-group">
+            <div class="option-group-title">
+              <span>Topping Tambahan</span>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Bisa pilih lebih dari satu</span>
+            </div>
+            
+            <label class="topping-option-item">
+              <div class="topping-left">
+                <input type="checkbox" name="topping" value="Cincau Hitam" data-price="2000">
+                <span>Cincau Hitam Segar</span>
+              </div>
+              <span class="topping-price">+Rp 2.000</span>
+            </label>
+
+            <label class="topping-option-item">
+              <div class="topping-left">
+                <input type="checkbox" name="topping" value="Rainbow Jelly" data-price="2000">
+                <span>Rainbow Crystal Jelly</span>
+              </div>
+              <span class="topping-price">+Rp 2.000</span>
+            </label>
+
+            <label class="topping-option-item">
+              <div class="topping-left">
+                <input type="checkbox" name="topping" value="Biji Selasih" data-price="1000">
+                <span>Biji Selasih Alami</span>
+              </div>
+              <span class="topping-price">+Rp 1.000</span>
+            </label>
+
+            <label class="topping-option-item">
+              <div class="topping-left">
+                <input type="checkbox" name="topping" value="Cream Cheese Macchiato" data-price="3000">
+                <span>Cream Cheese Macchiato</span>
+              </div>
+              <span class="topping-price">+Rp 3.000</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Special Notes Textarea -->
+        <div class="option-group" style="border-bottom:none;">
+          <div class="option-group-title">
+            <span>Catatan Khusus Pesanan</span>
+          </div>
+          <textarea id="modalNotes" class="notes-input" placeholder="Contoh: Es dipisah, sedotan cabang 2, jangan terlalu manis..."></textarea>
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="modal-footer-action">
+          <div class="qty-counter">
+            <button class="qty-btn" onclick="AppState.changeModalQty(-1)">-</button>
+            <span class="qty-val" id="modalQty">1</span>
+            <button class="qty-btn" onclick="AppState.changeModalQty(1)">+</button>
+          </div>
+          <button class="btn-confirm-add" onclick="AppState.addToCartFromModal()">
+            <span>Tambahkan ke Keranjang</span>
+            <span id="modalTotalBtnPrice">Rp 4.000</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. CART & CHECKOUT SLIDE-OUT DRAWER -->
+  <div class="drawer-overlay" id="cartDrawerOverlay" onclick="AppState.closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>
+        <span>🛒</span>
+        <span>Keranjang Pesanan</span>
+      </h3>
+      <button class="modal-close-btn" style="position:static;" onclick="AppState.closeCartDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Empty State -->
+      <div id="cartDrawerEmpty" style="display:none; text-align:center; padding:3rem 1rem;">
+        <div style="font-size:3.5rem; margin-bottom:1rem;">🛍️</div>
+        <h4 style="font-weight:800; color:var(--dark); margin-bottom:0.5rem;">Keranjang Anda Kosong</h4>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem;">Pilih menu kesukaanmu dan masukkan ke dalam keranjang sekarang.</p>
+        <button class="btn-confirm-add" style="justify-content:center;" onclick="AppState.closeCartDrawer(); AppState.scrollToMenu();">
+          Lihat Menu Segar →
+        </button>
+      </div>
+
+      <!-- Items List -->
+      <div class="cart-items-list" id="cartDrawerItems">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Checkout Form Section -->
+      <div id="cartDrawerCheckoutSection">
+        <!-- Promo Code Input -->
+        <div class="drawer-promo-box">
+          <div class="promo-form">
+            <input type="text" id="promoInput" placeholder="Ketik kode promo (misal: POCISEGAR)">
+            <button class="btn-apply-promo" onclick="AppState.applyPromoCode()">Pakai</button>
+          </div>
+          <div id="drawerVoucherAlert" class="applied-voucher-alert" style="display:none;"></div>
+        </div>
+
+        <form class="checkout-form-section" id="checkoutForm" onsubmit="AppState.submitOrder(event)">
+          <h4 style="font-size:1rem; font-weight:800; color:var(--primary); margin-bottom:1rem;">
+            Informasi Pemesan
+          </h4>
+
+          <div class="form-group">
+            <label for="checkoutName">Nama Lengkap *</label>
+            <input type="text" id="checkoutName" required placeholder="Contoh: Andi Pratama" value="Andi">
+          </div>
+
+          <div class="form-group">
+            <label for="checkoutWa">Nomor WhatsApp Aktif *</label>
+            <input type="tel" id="checkoutWa" required placeholder="Contoh: 081234567890" value="081298765432">
+          </div>
+
+          <div class="form-group">
+            <label>Tipe Pemesanan *</label>
+            <div style="display:flex; gap:0.5rem; margin-top:0.3rem;">
+              <label style="flex:1; border:1px solid var(--border-color); padding:0.5rem; border-radius:var(--radius-sm); text-align:center; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                <input type="radio" name="checkoutOrderType" value="dine_in" checked> Makan di Tempat
+              </label>
+              <label style="flex:1; border:1px solid var(--border-color); padding:0.5rem; border-radius:var(--radius-sm); text-align:center; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                <input type="radio" name="checkoutOrderType" value="takeaway"> Bungkus Pulang
+              </label>
+              <label style="flex:1; border:1px solid var(--border-color); padding:0.5rem; border-radius:var(--radius-sm); text-align:center; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                <input type="radio" name="checkoutOrderType" value="delivery"> Pesan Antar
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="checkoutDetailDest">Nomor Meja / Alamat Pengiriman *</label>
+            <input type="text" id="checkoutDetailDest" required placeholder="Contoh: Meja 07 atau Jl. Mawar No. 12" value="Meja 07">
+          </div>
+
+          <div class="form-group">
+            <label>Metode Pembayaran *</label>
+            <div class="payment-selector">
+              <label class="payment-method-chip selected">
+                <input type="radio" name="paymentMethod" value="qris" checked>
+                <span class="pay-icon">📱</span>
+                <span class="pay-title">QRIS Instan</span>
+              </label>
+              <label class="payment-method-chip">
+                <input type="radio" name="paymentMethod" value="transfer">
+                <span class="pay-icon">🏦</span>
+                <span class="pay-title">Transfer Bank</span>
+              </label>
+              <label class="payment-method-chip">
+                <input type="radio" name="paymentMethod" value="cash">
+                <span class="pay-icon">💵</span>
+                <span class="pay-title">Tunai di Kasir</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Price Summary Breakdown -->
+          <div class="summary-box">
+            <div class="summary-row">
+              <span>Subtotal Minuman</span>
+              <span id="drawerSubtotal">Rp 0</span>
+            </div>
+            <div class="summary-row" id="drawerDiscountRow" style="display:none; color:#15803d; font-weight:700;">
+              <span>Diskon Voucher</span>
+              <span id="drawerDiscount">- Rp 0</span>
+            </div>
+            <div class="summary-row">
+              <span>Biaya Layanan & Cup Seal</span>
+              <span>Rp 1.000</span>
+            </div>
+            <div class="summary-row total-row">
+              <span>Total Pembayaran</span>
+              <span id="drawerGrandTotal">Rp 0</span>
+            </div>
+          </div>
+
+          <div style="margin-top:1.25rem;">
+            <button type="submit" class="btn-submit-order">
+              <span>Lanjutkan & Bayar Pesanan</span>
+              <span>→</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. LIVE ORDER TRACKING MODAL (Mie Gacoan Realtime Order Tracking) -->
+  <div class="modal-overlay" id="trackingModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="AppState.closeTrackingModal()">✕</button>
+      <div class="order-tracking-card">
+        <div class="track-header">
+          <div class="track-badge-id" id="trackOrderId">#POCI-10821</div>
+          <h3 style="font-size:1.35rem; font-weight:900; color:var(--dark);">Status Pesanan Anda</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">
+            Pesanan atas nama <b id="trackCustomerName">-</b> • <span id="trackOrderType">-</span>
+          </p>
+        </div>
+
+        <!-- Timeline Progress Bar -->
+        <div class="track-timeline">
+          <div class="progress-fill-line" id="timelineProgressLine" style="width: 33%;"></div>
+          
+          <div class="timeline-step completed" id="step-diterima">
+            <div class="step-circle">1</div>
+            <span class="step-label">Diterima</span>
+          </div>
+
+          <div class="timeline-step current" id="step-diproses">
+            <div class="step-circle">2</div>
+            <span class="step-label">Diracik</span>
+          </div>
+
+          <div class="timeline-step" id="step-siap">
+            <div class="step-circle">3</div>
+            <span class="step-label">Siap Saji</span>
+          </div>
+
+          <div class="timeline-step" id="step-selesai">
+            <div class="step-circle">4</div>
+            <span class="step-label">Selesai</span>
+          </div>
+        </div>
+
+        <!-- Dynamic QRIS payment box if QRIS chosen -->
+        <div class="qris-display-box" id="trackQrisBox">
+          <span style="font-size:0.78rem; font-weight:800; color:var(--primary); text-transform:uppercase; display:block; margin-bottom:0.4rem;">
+            Scan QRIS Nasional untuk Konfirmasi Otomatis
+          </span>
+          <!-- Dynamic QR code simulation with clean SVG -->
+          <svg style="width:160px; height:160px; margin:0 auto;" viewBox="0 0 100 100">
+            <rect width="100" height="100" fill="#ffffff" />
+            <!-- Corners -->
+            <rect x="10" y="10" width="25" height="25" fill="#000" />
+            <rect x="14" y="14" width="17" height="17" fill="#fff" />
+            <rect x="17" y="17" width="11" height="11" fill="#000" />
+
+            <rect x="65" y="10" width="25" height="25" fill="#000" />
+            <rect x="69" y="14" width="17" height="17" fill="#fff" />
+            <rect x="72" y="17" width="11" height="11" fill="#000" />
+
+            <rect x="10" y="65" width="25" height="25" fill="#000" />
+            <rect x="14" y="69" width="17" height="17" fill="#fff" />
+            <rect x="17" y="72" width="11" height="11" fill="#000" />
+
+            <!-- Pattern Dots -->
+            <rect x="42" y="15" width="6" height="6" fill="#000" />
+            <rect x="52" y="15" width="6" height="6" fill="#000" />
+            <rect x="42" y="27" width="6" height="6" fill="#000" />
+            <rect x="52" y="35" width="6" height="6" fill="#000" />
+            <rect x="25" y="45" width="6" height="6" fill="#000" />
+            <rect x="35" y="45" width="12" height="6" fill="#000" />
+            <rect x="55" y="48" width="8" height="8" fill="#000" />
+            <rect x="70" y="45" width="6" height="6" fill="#000" />
+            <rect x="80" y="55" width="8" height="6" fill="#000" />
+            <rect x="42" y="65" width="8" height="8" fill="#000" />
+            <rect x="55" y="65" width="6" height="6" fill="#000" />
+            <rect x="42" y="78" width="6" height="6" fill="#000" />
+            <rect x="55" y="78" width="12" height="6" fill="#000" />
+            <rect x="75" y="75" width="10" height="10" fill="#000" />
+            <!-- Center Mini Brand Dot -->
+            <circle cx="50" cy="50" r="7" fill="#e30613" />
+            <circle cx="50" cy="50" r="4" fill="#ffd100" />
+          </svg>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">
+            Dapat dipindai melalui GoPay, OVO, DANA, ShopeePay, BCA, Mandiri, dll.
+          </div>
+          <div style="margin-top:0.6rem;">
+            <span class="qris-timer-pill">Menunggu Verifikasi Kasir • Estimasi 3 mnt</span>
+          </div>
+        </div>
+
+        <!-- Order Items Detail in Tracking -->
+        <div style="background:#f8faf8; border-radius:var(--radius-sm); padding:1rem; margin-bottom:1.25rem;">
+          <div style="font-size:0.8rem; font-weight:800; color:var(--text-main); margin-bottom:0.5rem; text-transform:uppercase;">
+            Rincian Pesanan:
+          </div>
+          <div id="trackItemsList"></div>
+          <div style="display:flex; justify-content:space-between; border-top:1px dashed var(--border-color); padding-top:0.5rem; margin-top:0.5rem; font-weight:900;">
+            <span>Total Bayar:</span>
+            <span id="trackTotal" style="color:var(--primary);">Rp 0</span>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">
+            Metode Pembayaran: <b id="trackPayMethod">QRIS</b>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display:flex; flex-direction:column; gap:0.6rem;">
+          <a href="#" id="btnTrackSendWa" target="_blank" class="btn-submit-order" style="text-decoration:none; background:#25d366; box-shadow:none;">
+            <span>💬 Kirim Struk ke WhatsApp Kasir</span>
+          </a>
+          <button class="btn-confirm-add" style="justify-content:center; background:#f1f5f2; color:var(--dark); box-shadow:none;" onclick="window.print()">
+            <span>🖨️ Cetak / Simpan Struk</span>
+          </button>
+        </div>
+      </div>
+  <!-- JavaScript App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

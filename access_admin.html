@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin & Kitchen Portal - Es Teh Poci Mide</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Dedicated Admin Styles */
+    body.admin-body {
+      background: #0f1411;
+      color: #e2e8f0;
+      padding-bottom: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-navbar {
+      background: #18201a;
+      border-bottom: 2px solid rgba(0, 94, 43, 0.4);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .admin-brand img {
+      height: 44px;
+    }
+
+    .admin-brand-info h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .admin-brand-info span {
+      font-size: 0.72rem;
+      color: var(--yellow);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .admin-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-sound-toggle {
+      background: #243027;
+      color: #cbd5e1;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-sound-toggle.active {
+      background: rgba(0, 94, 43, 0.3);
+      color: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .admin-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #243027;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .admin-user-avatar {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    .btn-logout {
+      background: rgba(227, 6, 19, 0.15);
+      color: #ff6b6b;
+      border: 1px solid rgba(227, 6, 19, 0.3);
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .btn-logout:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    /* Admin Layout Grid */
+    .admin-layout {
+      display: flex;
+      flex: 1;
+    }
+
+    .admin-sidebar {
+      width: 250px;
+      background: #141b16;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .admin-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #94a3b8;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .admin-menu-item:hover, .admin-menu-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 94, 43, 0.35);
+    }
+
+    .admin-menu-item .menu-badge {
+      margin-left: auto;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+    }
+
+    .admin-main-content {
+      flex: 1;
+      padding: 1.75rem 2rem;
+      overflow-y: auto;
+    }
+
+    /* Cards & Stats */
+    .admin-stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .dark-stat-card {
+      background: #18201a;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark-stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-light);
+    }
+
+    .dark-stat-card.accent-yellow::after { background: var(--yellow); }
+    .dark-stat-card.accent-red::after { background: var(--red); }
+    .dark-stat-card.accent-blue::after { background: #38bdf8; }
+
+    .dark-stat-card span.stat-lbl {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dark-stat-card h3.stat-val {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #fff;
+      margin-top: 0.4rem;
+    }
+
+    /* Orders Queue Grid (KDS Kitchen Display Style) */
+    .kds-columns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .kds-col {
+      background: #151c17;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 270px);
+    }
+
+    .kds-col-header {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .kds-col-header.diterima { border-top: 4px solid #38bdf8; color: #38bdf8; }
+    .kds-col-header.diproses { border-top: 4px solid #facc15; color: #facc15; }
+    .kds-col-header.siap { border-top: 4px solid #c084fc; color: #c084fc; }
+    .kds-col-header.selesai { border-top: 4px solid #4ade80; color: #4ade80; }
+
+    .kds-card-list {
+      padding: 0.85rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+    }
+
+    .kds-order-ticket {
+      background: #1c261f;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      transition: var(--transition);
+    }
+
+    .kds-order-ticket:hover {
+      border-color: var(--yellow);
+      transform: translateY(-2px);
+    }
+
+    .ticket-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+      padding-bottom: 0.4rem;
+    }
+
+    .ticket-id {
+      font-weight: 900;
+      color: var(--yellow);
+      font-size: 0.95rem;
+    }
+
+    .ticket-type-badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 800;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .ticket-customer {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .ticket-dest {
+      font-size: 0.75rem;
+      color: #a3e635;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .ticket-items {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      margin-bottom: 0.75rem;
+      background: rgba(0,0,0,0.2);
+      padding: 0.5rem;
+      border-radius: 4px;
+    }
+
+    .ticket-item-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+    }
+
+    .ticket-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding-top: 0.4rem;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+    }
+
+    .ticket-total {
+      font-weight: 900;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+
+    .btn-ticket-action {
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-ticket-action:hover {
+      background: var(--primary-light);
+    }
+
+    /* Products Management Table */
+    .admin-dark-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #18201a;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      font-size: 0.88rem;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .admin-dark-table th {
+      background: #141b16;
+      color: #cbd5e1;
+      text-align: left;
+      padding: 0.85rem 1rem;
+      font-weight: 800;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .admin-dark-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: #e2e8f0;
+      vertical-align: middle;
+    }
+
+    .btn-stock-toggle {
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-stock-toggle.in-stock {
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    .btn-stock-toggle.out-stock {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* Login Modal Overlay */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 11, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .login-box {
+      background: #18201a;
+      border: 2px solid rgba(0, 94, 43, 0.5);
+      border-radius: 20px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .login-box img {
+      height: 64px;
+      margin-bottom: 1.25rem;
+    }
+
+    .login-box h3 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .login-box p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: #121714;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .login-box input:focus {
+      border-color: var(--yellow);
+      outline: none;
+    }
+
+    .btn-login-submit {
+      width: 100%;
+      background: var(--yellow);
+      color: #121814;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.85rem;
+      border-radius: var(--radius-sm);
+      margin-top: 0.5rem;
+    }
+
+    .btn-login-submit:hover {
+      background: var(--yellow-hover);
+    }
+
+    @media (max-width: 1100px) {
+      .kds-columns {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .admin-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-layout {
+        flex-direction: column;
+      }
+      .admin-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .kds-columns {
+        grid-template-columns: 1fr;
+      }
+      .admin-stats-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- ADMIN LOGIN MODAL (Default Active until login / session) -->
+  <div class="login-overlay" id="adminLoginOverlay">
+    <div class="login-box">
+      <img src="assets/images/logo.svg" alt="Es Teh Poci Mide">
+      <h3>Portal Akses Admin & Kasir</h3>
+      <p>Masuk untuk mengelola pesanan, antrean dapur, stok menu, dan laporan penjualan.</p>
+
+      <form id="adminLoginForm" onsubmit="AdminApp.handleLogin(event)">
+        <div style="text-align:left; margin-bottom:0.35rem; font-size:0.8rem; font-weight:700; color:#cbd5e1;">Username / Email</div>
+        <input type="text" id="loginUsername" placeholder="admin@estehpocimide.com" value="admin@estehpocimide.com" required>
+
+        <div style="text-align:left; margin-bottom:0.35rem; font-size:0.8rem; font-weight:700; color:#cbd5e1;">PIN / Sandi Kasir</div>
+        <input type="password" id="loginPassword" placeholder="PIN Kasir (1234)" value="1234" required>
+
+        <button type="submit" class="btn-login-submit">
+          Masuk ke Dashboard →
+        </button>
+      </form>
+      <div style="margin-top:1.25rem;">
+        <a href="index.html" style="font-size:0.82rem; color:var(--yellow); text-decoration:none;">
+          ← Kembali ke Halaman Pemesanan Pelanggan
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN NAVBAR -->
+  <header class="admin-navbar">
+    <div class="admin-brand">
+      <img src="assets/images/logo.svg" alt="Es Teh Poci Mide">
+      <div class="admin-brand-info">
+        <h2>ES TEH POCI MIDE • PORTAL OPERASIONAL</h2>
+        <span>Sistem Kasir & Kitchen Display System (KDS)</span>
+      </div>
+    </div>
+
+    <div class="admin-nav-right">
+      <button class="btn-sound-toggle active" id="btnSoundToggle" onclick="AdminApp.toggleSound()">
+        <span id="soundIcon">🔔</span>
+        <span id="soundText">Notifikasi Audio Aktif</span>
+      </button>
+
+      <div class="admin-user-pill">
+        <div class="admin-user-avatar">ADM</div>
+        <span>Kasir Utama (Mide-01)</span>
+      </div>
+
+      <a href="index.html" class="btn-logout" style="background:#243027; color:#cbd5e1; border-color:rgba(255,255,255,0.1);" title="Buka Halaman Pelanggan">
+        🌐 Toko Pelanggan
+      </a>
+
+      <button class="btn-logout" onclick="AdminApp.handleLogout()">
+        Keluar
+      </button>
+    </div>
+  </header>
+
+  <!-- ADMIN MAIN LAYOUT -->
+  <div class="admin-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="admin-menu-item active" data-tab="orders" onclick="AdminApp.switchTab('orders')">
+        <span>🛎️</span>
+        <span>Antrean Dapur (KDS)</span>
+        <span class="menu-badge" id="sidebarActiveBadge">0</span>
+      </div>
+
+      <div class="admin-menu-item" data-tab="products" onclick="AdminApp.switchTab('products')">
+        <span>🍵</span>
+        <span>Kelola Menu & Stok</span>
+      </div>
+
+      <div class="admin-menu-item" data-tab="promos" onclick="AdminApp.switchTab('promos')">
+        <span>🎟️</span>
+        <span>Voucher Promo</span>
+      </div>
+
+      <div class="admin-menu-item" data-tab="reports" onclick="AdminApp.switchTab('reports')">
+        <span>📈</span>
+        <span>Laporan Penjualan</span>
+      </div>
+
+      <div style="margin-top:auto; padding:1rem; background:rgba(0,0,0,0.25); border-radius:var(--radius-sm); font-size:0.75rem; color:#94a3b8;">
+        <div><b>Sinkronisasi Realtime:</b></div>
+        <div>Pesanan masuk dari pelanggan langsung tampil di layar ini tanpa reload.</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main-content">
+
+      <!-- Stats Overview Row -->
+      <div class="admin-stats-row">
+        <div class="dark-stat-card">
+          <span class="stat-lbl">Total Omset Penjualan</span>
+          <h3 class="stat-val" id="statTotalRev">Rp 0</h3>
+        </div>
+
+        <div class="dark-stat-card accent-yellow">
+          <span class="stat-lbl">Total Transaksi Selesai</span>
+          <h3 class="stat-val" id="statTotalDone">0</h3>
+        </div>
+
+        <div class="dark-stat-card accent-red">
+          <span class="stat-lbl">Pesanan Sedang Diproses</span>
+          <h3 class="stat-val" id="statActiveCount">0</h3>
+        </div>
+
+        <div class="dark-stat-card accent-blue">
+          <span class="stat-lbl">Rata-Rata Waktu Saji</span>
+          <h3 class="stat-val">5.8 Menit</h3>
+        </div>
+      </div>
+
+      <!-- TAB 1: KITCHEN DISPLAY SYSTEM (ORDERS QUEUE) -->
+      <section id="tab-orders">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <div>
+            <h2 style="font-size:1.4rem; font-weight:900; color:#fff;">Antrean Pesanan Masuk (Real-time KDS)</h2>
+            <p style="font-size:0.85rem; color:#94a3b8;">Pantau dan ubah status pesanan pelanggan saat sedang diracik hingga diserahkan.</p>
+          </div>
+          <div>
+            <button class="btn-ticket-action" onclick="AdminApp.refreshOrders()" style="background:#243027; border:1px solid rgba(255,255,255,0.1);">
+              🔄 Segarkan Antrean
+            </button>
+          </div>
+        </div>
+
+        <!-- KDS 4 COLUMNS -->
+        <div class="kds-columns">
+          <!-- Col 1: Diterima -->
+          <div class="kds-col">
+            <div class="kds-col-header diterima">
+              <span>📥 1. PESANAN MASUK</span>
+              <span id="badge-count-diterima">0</span>
+            </div>
+            <div class="kds-card-list" id="kds-list-diterima"></div>
+          </div>
+
+          <!-- Col 2: Diproses -->
+          <div class="kds-col">
+            <div class="kds-col-header diproses">
+              <span>🫖 2. SEDANG DIRACIK</span>
+              <span id="badge-count-diproses">0</span>
+            </div>
+            <div class="kds-card-list" id="kds-list-diproses"></div>
+          </div>
+
+          <!-- Col 3: Siap Saji -->
+          <div class="kds-col">
+            <div class="kds-col-header siap">
+              <span>🔔 3. SIAP SAJI / ANTAR</span>
+              <span id="badge-count-siap">0</span>
+            </div>
+            <div class="kds-card-list" id="kds-list-siap"></div>
+          </div>
+
+          <!-- Col 4: Selesai -->
+          <div class="kds-col">
+            <div class="kds-col-header selesai">
+              <span>✅ 4. SELESAI</span>
+              <span id="badge-count-selesai">0</span>
+            </div>
+            <div class="kds-card-list" id="kds-list-selesai"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PRODUCTS & STOCK MANAGEMENT -->
+      <section id="tab-products" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+          <div>
+            <h2 style="font-size:1.4rem; font-weight:900; color:#fff;">Manajemen Menu & Stok Bahan</h2>
+            <p style="font-size:0.85rem; color:#94a3b8;">Aktifkan atau non-aktifkan menu jika stok bahan di gerai habis.</p>
+          </div>
+        </div>
+
+        <table class="admin-dark-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama Menu Minuman / Snack</th>
+              <th>Kategori</th>
+              <th>Harga Jual</th>
+              <th>Status Stok</th>
+              <th>Aksi Cepat</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsTable">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- TAB 3: PROMO VOUCHERS -->
+      <section id="tab-promos" style="display:none;">
+        <div style="margin-bottom:1.5rem;">
+          <h2 style="font-size:1.4rem; font-weight:900; color:#fff;">Manajemen Voucher Promo Pelanggan</h2>
+          <p style="font-size:0.85rem; color:#94a3b8;">Daftar kode voucher yang dapat diklaim dan digunakan oleh pelanggan.</p>
+        </div>
+
+        <table class="admin-dark-table">
+          <thead>
+            <tr>
+              <th>Kode Promo</th>
+              <th>Potongan Diskon</th>
+              <th>Minimal Pembelian</th>
+              <th>Keterangan</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b style="color:var(--yellow); font-size:1rem;">POCISEGAR</b></td>
+              <td>Potongan Rp 5.000</td>
+              <td>Rp 15.000</td>
+              <td>Diskon spesial belanja minimal Rp 15.000</td>
+              <td><span style="color:#4ade80; font-weight:800;">🟢 Aktif</span></td>
+            </tr>
+            <tr>
+              <td><b style="color:var(--yellow); font-size:1rem;">GACOANMIDE</b></td>
+              <td>Diskon 15%</td>
+              <td>Rp 20.000</td>
+              <td>Diskon paket teh susu dan dimsum</td>
+              <td><span style="color:#4ade80; font-weight:800;">🟢 Aktif</span></td>
+            </tr>
+            <tr>
+              <td><b style="color:var(--yellow); font-size:1rem;">FREEONGKIR</b></td>
+              <td>Potongan Rp 5.000</td>
+              <td>Rp 25.000</td>
+              <td>Subsidi ongkos kirim pesanan delivery</td>
+              <td><span style="color:#4ade80; font-weight:800;">🟢 Aktif</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- TAB 4: SALES REPORTS (HARIAN, MINGGUAN, BULANAN) -->
+      <section id="tab-reports" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+          <div>
+            <h2 style="font-size:1.4rem; font-weight:900; color:#fff;">Laporan & Analisis Penjualan Pelanggan</h2>
+            <p style="font-size:0.85rem; color:#94a3b8;">Pantau performa penjualan secara Harian, Mingguan, dan Bulanan dengan data terinci.</p>
+          </div>
+
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button class="btn-ticket-action" onclick="AdminApp.exportSalesCSV()" style="background:#15803d; border:1px solid #16a34a;">
+              <span>📥 Unduh CSV / Excel</span>
+            </button>
+            <button class="btn-ticket-action" onclick="window.print()" style="background:#243027; border:1px solid rgba(255,255,255,0.1);">
+              <span>🖨️ Cetak Laporan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Period Filter Selector -->
+        <div style="background:#18201a; border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn-sound-toggle active" id="btnReportPeriodDaily" onclick="AdminApp.setReportPeriod('daily')">
+              <span>📅 Harian</span>
+            </button>
+            <button class="btn-sound-toggle" id="btnReportPeriodWeekly" onclick="AdminApp.setReportPeriod('weekly')">
+              <span>📆 Mingguan</span>
+            </button>
+            <button class="btn-sound-toggle" id="btnReportPeriodMonthly" onclick="AdminApp.setReportPeriod('monthly')">
+              <span>🗓️ Bulanan</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Period Control Input -->
+          <div id="reportPeriodControls" style="display:flex; align-items:center; gap:0.75rem;">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Metric KPI Summary Cards for Selected Period -->
+        <div class="admin-stats-row" style="margin-bottom:1.5rem;">
+          <div class="dark-stat-card">
+            <span class="stat-lbl" id="reportLblRev">Total Omset</span>
+            <h3 class="stat-val" id="reportValRev" style="color:#4ade80;">Rp 0</h3>
+          </div>
+          <div class="dark-stat-card accent-yellow">
+            <span class="stat-lbl">Total Transaksi</span>
+            <h3 class="stat-val" id="reportValCount">0</h3>
+          </div>
+          <div class="dark-stat-card accent-blue">
+            <span class="stat-lbl">Rata-Rata Belanja (AOV)</span>
+            <h3 class="stat-val" id="reportValAov">Rp 0</h3>
+          </div>
+          <div class="dark-stat-card accent-red">
+            <span class="stat-lbl">Menu Terlaris</span>
+            <h3 class="stat-val" id="reportValTopItem" style="font-size:1.1rem; line-height:1.3; margin-top:0.6rem;">-</h3>
+          </div>
+        </div>
+
+        <!-- Visual Bar Chart Component (CSS Native) -->
+        <div style="background:#18201a; border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-md); padding:1.25rem; margin-bottom:1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h4 style="font-weight:800; color:#fff;" id="chartTitle">Grafik Distribusi Omset Penjualan</h4>
+            <span style="font-size:0.75rem; color:#94a3b8;" id="chartSubtitle">Dalam Ribuan Rupiah (IDR)</span>
+          </div>
+          <div id="chartContainer" style="display:flex; align-items:flex-end; gap:0.75rem; height:180px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+            <!-- Rendered via JS -->
+          </div>
+          <div id="chartLabels" style="display:flex; justify-content:space-between; padding-top:8px; font-size:0.75rem; color:#94a3b8;">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Table of Filtered Transactions -->
+        <div style="background:#18201a; border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-md); padding:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h4 style="font-weight:800; color:#fff;">Daftar Rincian Transaksi Periode Terpilih</h4>
+            <span id="reportRowCount" style="font-size:0.8rem; color:#94a3b8;">0 Transaksi</span>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="admin-dark-table">
+              <thead>
+                <tr>
+                  <th>No. Pesanan</th>
+                  <th>Waktu / Tanggal</th>
+                  <th>Pelanggan</th>
+                  <th>Tipe & Meja</th>
+                  <th>Detail Item & Topping</th>
+                  <th>Metode Bayar</th>
+                  <th>Total Transaksi</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="adminReportsTable">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Admin Controller Script -->
+  <script>
+    const SAMPLE_HISTORICAL_ORDERS = [
+      {
+        id: 'POCI-10821',
+        customerName: 'Budi Santoso',
+        whatsapp: '081234567890',
+        orderType: 'dine_in',
+        tableOrAddress: 'Meja 04',
+        paymentMethod: 'qris',
+        items: [
+          { name: 'Es Teh Poci Melati Original', qty: 2, size: 'Jumbo (22oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: ['Cincau Hitam'], totalItemPrice: 16000 },
+          { name: 'Pangsit Goreng Crispy Gacoan Mide', qty: 1, totalItemPrice: 10000 }
+        ],
+        subtotal: 26000,
+        discount: 5000,
+        serviceFee: 1000,
+        total: 22000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 50).toISOString() // 50 mins ago today
+      },
+      {
+        id: 'POCI-10822',
+        customerName: 'Siti Rahma',
+        whatsapp: '085712349988',
+        orderType: 'takeaway',
+        tableOrAddress: 'Bungkus',
+        paymentMethod: 'cash',
+        items: [
+          { name: 'Es Teh Poci Leci Sultan', qty: 2, size: 'Reguler (16oz)', sugar: 'Less Sugar 70%', ice: 'Normal Ice', toppings: ['Rainbow Jelly'], totalItemPrice: 22000 }
+        ],
+        subtotal: 22000,
+        discount: 0,
+        serviceFee: 1000,
+        total: 23000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 180).toISOString() // 3 hours ago today
+      },
+      {
+        id: 'POCI-10823',
+        customerName: 'Dimas Arya',
+        whatsapp: '081399887766',
+        orderType: 'dine_in',
+        tableOrAddress: 'Meja 07',
+        paymentMethod: 'qris',
+        items: [
+          { name: 'Es Teh Lemon Fresh Sultan', qty: 2, size: 'Jumbo (22oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: ['Biji Selasih'], totalItemPrice: 20000 },
+          { name: 'Udang Rambutan Golden Ball', qty: 1, totalItemPrice: 12000 }
+        ],
+        subtotal: 32000,
+        discount: 5000,
+        serviceFee: 1000,
+        total: 28000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 360).toISOString() // 6 hours ago today
+      },
+      {
+        id: 'POCI-10815',
+        customerName: 'Anisa Maharani',
+        whatsapp: '081923456711',
+        orderType: 'delivery',
+        tableOrAddress: 'Jl. Melati No. 18',
+        paymentMethod: 'transfer',
+        items: [
+          { name: 'Es Teh Poci Susu Brown Sugar', qty: 3, size: 'Jumbo (22oz)', sugar: 'Less Sugar 70%', ice: 'Normal Ice', toppings: ['Rainbow Jelly'], totalItemPrice: 42000 },
+          { name: 'Pangsit Goreng Crispy Gacoan Mide', qty: 2, totalItemPrice: 20000 }
+        ],
+        subtotal: 62000,
+        discount: 5000,
+        serviceFee: 1000,
+        total: 58000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString() // Yesterday
+      },
+      {
+        id: 'POCI-10810',
+        customerName: 'Rian Hidayat',
+        whatsapp: '082145678901',
+        orderType: 'dine_in',
+        tableOrAddress: 'Meja 02',
+        paymentMethod: 'qris',
+        items: [
+          { name: 'Paket Puas Mide: Teh Jumbo + Pangsit', qty: 2, totalItemPrice: 28000 }
+        ],
+        subtotal: 28000,
+        discount: 0,
+        serviceFee: 1000,
+        total: 29000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 50).toISOString() // 2 days ago
+      },
+      {
+        id: 'POCI-10795',
+        customerName: 'Dewi Lestari',
+        whatsapp: '085611223344',
+        orderType: 'takeaway',
+        tableOrAddress: 'Bungkus',
+        paymentMethod: 'cash',
+        items: [
+          { name: 'Macchiato Jasmine Cheese Cream', qty: 2, size: 'Jumbo (22oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: ['Cream Cheese Macchiato'], totalItemPrice: 32000 }
+        ],
+        subtotal: 32000,
+        discount: 5000,
+        serviceFee: 1000,
+        total: 28000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 95).toISOString() // 4 days ago
+      },
+      {
+        id: 'POCI-10780',
+        customerName: 'Fajar Nugraha',
+        whatsapp: '087812344321',
+        orderType: 'dine_in',
+        tableOrAddress: 'Meja 09',
+        paymentMethod: 'qris',
+        items: [
+          { name: 'Es Teh Poci Melati Original', qty: 4, size: 'Reguler (16oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: [], totalItemPrice: 16000 },
+          { name: 'Siomay Ayam Kukus Lembut', qty: 2, totalItemPrice: 20000 }
+        ],
+        subtotal: 36000,
+        discount: 0,
+        serviceFee: 1000,
+        total: 37000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 140).toISOString() // 6 days ago
+      },
+      {
+        id: 'POCI-10750',
+        customerName: 'Citra Kirana',
+        whatsapp: '081299001122',
+        orderType: 'delivery',
+        tableOrAddress: 'Jl. Ahmad Yani No. 5',
+        paymentMethod: 'transfer',
+        items: [
+          { name: 'Es Teh Mangga Tropis Mide', qty: 3, size: 'Jumbo (22oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: ['Biji Selasih'], totalItemPrice: 33000 },
+          { name: 'Pangsit Goreng Crispy Gacoan Mide', qty: 2, totalItemPrice: 20000 }
+        ],
+        subtotal: 53000,
+        discount: 5000,
+        serviceFee: 1000,
+        total: 49000,
+        status: 'selesai',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 260).toISOString() // ~11 days ago (earlier this month)
+      }
+    ];
+
+    const AdminApp = {
+      isLoggedIn: false,
+      soundEnabled: true,
+      audioCtx: null,
+      reportPeriod: 'daily', // 'daily', 'weekly', 'monthly'
+      selectedDate: new Date().toISOString().split('T')[0],
+      selectedMonth: new Date().toISOString().slice(0, 7),
+
+      init() {
+        if (sessionStorage.getItem('poci_admin_auth') === 'true') {
+          this.isLoggedIn = true;
+          document.getElementById('adminLoginOverlay').style.display = 'none';
+        }
+
+        // Initialize historical data if needed
+        const existing = this.getOrders();
+        if (existing.length < 5) {
+          localStorage.setItem('poci_orders', JSON.stringify(SAMPLE_HISTORICAL_ORDERS));
+        }
+
+        this.updatePeriodControls();
+        this.renderAll();
+
+        window.addEventListener('storage', (e) => {
+          if (e.key === 'poci_orders' || e.key === 'poci_products') {
+            this.renderAll();
+            this.playChime();
+          }
+        });
+
+        setInterval(() => {
+          this.renderAll();
+        }, 4000);
+      },
+
+      handleLogin(e) {
+        e.preventDefault();
+        const pin = document.getElementById('loginPassword').value.trim();
+        if (pin === '1234' || pin === 'admin') {
+          this.isLoggedIn = true;
+          sessionStorage.setItem('poci_admin_auth', 'true');
+          document.getElementById('adminLoginOverlay').style.display = 'none';
+          this.renderAll();
+        } else {
+          alert('PIN Kasir salah! Gunakan PIN default: 1234');
+        }
+      },
+
+      handleLogout() {
+        sessionStorage.removeItem('poci_admin_auth');
+        window.location.reload();
+      },
+
+      switchTab(tabName) {
+        document.querySelectorAll('.admin-menu-item').forEach(el => el.classList.remove('active'));
+        document.querySelector(`.admin-menu-item[data-tab="${tabName}"]`)?.classList.add('active');
+
+        ['orders', 'products', 'promos', 'reports'].forEach(t => {
+          const sec = document.getElementById(`tab-${t}`);
+          if (sec) sec.style.display = (t === tabName ? 'block' : 'none');
+        });
+
+        this.renderAll();
+      },
+
+      setReportPeriod(period) {
+        this.reportPeriod = period;
+        ['daily', 'weekly', 'monthly'].forEach(p => {
+          const btn = document.getElementById(`btnReportPeriod${p.charAt(0).toUpperCase() + p.slice(1)}`);
+          if (btn) {
+            if (p === period) btn.classList.add('active');
+            else btn.classList.remove('active');
+          }
+        });
+        this.updatePeriodControls();
+        this.renderReportsView(this.getOrders());
+      },
+
+      updatePeriodControls() {
+        const wrap = document.getElementById('reportPeriodControls');
+        if (!wrap) return;
+
+        if (this.reportPeriod === 'daily') {
+          wrap.innerHTML = `
+            <span style="font-size:0.8rem; color:#94a3b8; font-weight:700;">Pilih Tanggal:</span>
+            <input type="date" id="inputReportDate" value="${this.selectedDate}" 
+              style="background:#121714; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.85rem;"
+              onchange="AdminApp.onDateChange(this.value)">
+          `;
+        } else if (this.reportPeriod === 'weekly') {
+          wrap.innerHTML = `
+            <span style="background:rgba(0,94,43,0.3); border:1px solid var(--primary); color:var(--yellow); padding:0.35rem 0.85rem; border-radius:99px; font-size:0.8rem; font-weight:800;">
+              📆 Rekap 7 Hari Terakhir (Senin - Minggu)
+            </span>
+          `;
+        } else {
+          wrap.innerHTML = `
+            <span style="font-size:0.8rem; color:#94a3b8; font-weight:700;">Pilih Bulan:</span>
+            <input type="month" id="inputReportMonth" value="${this.selectedMonth}" 
+              style="background:#121714; border:1px solid rgba(255,255,255,0.15); color:#fff; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.85rem;"
+              onchange="AdminApp.onMonthChange(this.value)">
+          `;
+        }
+      },
+
+      onDateChange(newVal) {
+        if (newVal) {
+          this.selectedDate = newVal;
+          this.renderReportsView(this.getOrders());
+        }
+      },
+
+      onMonthChange(newVal) {
+        if (newVal) {
+          this.selectedMonth = newVal;
+          this.renderReportsView(this.getOrders());
+        }
+      },
+
+      toggleSound() {
+        this.soundEnabled = !this.soundEnabled;
+        const btn = document.getElementById('btnSoundToggle');
+        const icon = document.getElementById('soundIcon');
+        const txt = document.getElementById('soundText');
+
+        if (this.soundEnabled) {
+          btn.classList.add('active');
+          icon.innerText = '🔔';
+          txt.innerText = 'Notifikasi Audio Aktif';
+        } else {
+          btn.classList.remove('active');
+          icon.innerText = '🔕';
+          txt.innerText = 'Audio Dibisukan';
+        }
+      },
+
+      playChime() {
+        if (!this.soundEnabled) return;
+        try {
+          if (!this.audioCtx) this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(this.audioCtx.destination);
+          osc.frequency.setValueAtTime(587.33, this.audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, this.audioCtx.currentTime + 0.2);
+          gain.gain.setValueAtTime(0.15, this.audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.25);
+          osc.start();
+          osc.stop(this.audioCtx.currentTime + 0.25);
+        } catch (err) {}
+      },
+
+      getOrders() {
+        const raw = localStorage.getItem('poci_orders');
+        return raw ? JSON.parse(raw) : [];
+      },
+
+      saveOrders(orders) {
+        localStorage.setItem('poci_orders', JSON.stringify(orders));
+        this.renderAll();
+      },
+
+      getProducts() {
+        const raw = localStorage.getItem('poci_products');
+        return raw ? JSON.parse(raw) : [];
+      },
+
+      saveProducts(products) {
+        localStorage.setItem('poci_products', JSON.stringify(products));
+        this.renderAll();
+      },
+
+      renderAll() {
+        const orders = this.getOrders();
+        const products = this.getProducts();
+
+        // 1. Top Navbar & Global Stats
+        const totalRev = orders.filter(o => o.status === 'selesai').reduce((sum, o) => sum + o.total, 0);
+        const totalDone = orders.filter(o => o.status === 'selesai').length;
+        const activeCount = orders.filter(o => o.status !== 'selesai' && o.status !== 'dibatalkan').length;
+
+        document.getElementById('statTotalRev').innerText = `Rp ${totalRev.toLocaleString('id-ID')}`;
+        document.getElementById('statTotalDone').innerText = totalDone;
+        document.getElementById('statActiveCount').innerText = activeCount;
+        document.getElementById('sidebarActiveBadge').innerText = activeCount;
+
+        // 2. KDS Columns
+        const statuses = ['diterima', 'diproses', 'siap', 'selesai'];
+        statuses.forEach(st => {
+          const listEl = document.getElementById(`kds-list-${st}`);
+          const countEl = document.getElementById(`badge-count-${st}`);
+          const filtered = orders.filter(o => o.status === st);
+
+          if (countEl) countEl.innerText = filtered.length;
+          if (listEl) {
+            if (filtered.length === 0) {
+              listEl.innerHTML = `<div style="text-align:center; padding:2rem 0.5rem; color:#64748b; font-size:0.75rem;">Tidak ada pesanan</div>`;
+            } else {
+              listEl.innerHTML = filtered.map(o => `
+                <div class="kds-order-ticket">
+                  <div class="ticket-top">
+                    <span class="ticket-id">#${o.id}</span>
+                    <span class="ticket-type-badge">${o.orderType.toUpperCase()}</span>
+                  </div>
+                  <div class="ticket-customer">${o.customerName}</div>
+                  <div class="ticket-dest">📍 ${o.tableOrAddress} • 📞 ${o.whatsapp}</div>
+                  
+                  <div class="ticket-items">
+                    ${o.items.map(i => `
+                      <div class="ticket-item-line">
+                        <span><b>${i.qty}x</b> ${i.name} ${i.size ? `(${i.size.split(' ')[0]})` : ''}</span>
+                        <span>Rp ${i.totalItemPrice.toLocaleString('id-ID')}</span>
+                      </div>
+                      ${i.toppings && i.toppings.length ? `<div style="font-size:0.7rem; color:#94a3b8;">+ ${i.toppings.join(', ')}</div>` : ''}
+                      ${i.notes ? `<div style="font-size:0.7rem; color:#facc15;">* "${i.notes}"</div>` : ''}
+                    `).join('')}
+                  </div>
+
+                  <div class="ticket-bottom">
+                    <span class="ticket-total">Rp ${o.total.toLocaleString('id-ID')}</span>
+                    <div>
+                      ${st === 'diterima' ? `
+                        <button class="btn-ticket-action" onclick="AdminApp.advanceStatus('${o.id}', 'diproses')">
+                          <span>Racik ➔</span>
+                        </button>
+                      ` : ''}
+                      ${st === 'diproses' ? `
+                        <button class="btn-ticket-action" style="background:#7e22ce;" onclick="AdminApp.advanceStatus('${o.id}', 'siap')">
+                          <span>Siap Saji ➔</span>
+                        </button>
+                      ` : ''}
+                      ${st === 'siap' ? `
+                        <button class="btn-ticket-action" style="background:#15803d;" onclick="AdminApp.advanceStatus('${o.id}', 'selesai')">
+                          <span>Selesaikan ✓</span>
+                        </button>
+                      ` : ''}
+                      ${st === 'selesai' ? `
+                        <span style="font-size:0.72rem; color:#4ade80; font-weight:800;">✓ Selesai</span>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              `).join('');
+            }
+          }
+        });
+
+        // 3. Products Stock Table
+        const prodTable = document.getElementById('adminProductsTable');
+        if (prodTable && products.length > 0) {
+          prodTable.innerHTML = products.map(p => `
+            <tr>
+              <td>#${p.id}</td>
+              <td><b>${p.name}</b></td>
+              <td><span style="color:#94a3b8;">${p.categoryName}</span></td>
+              <td><b style="color:var(--yellow);">Rp ${p.price.toLocaleString('id-ID')}</b></td>
+              <td>
+                <span class="btn-stock-toggle ${p.isAvailable ? 'in-stock' : 'out-stock'}">
+                  ${p.isAvailable ? '🟢 Tersedia' : '🔴 Habis Terjual'}
+                </span>
+              </td>
+              <td>
+                <button class="btn-ticket-action" style="background: ${p.isAvailable ? '#e30613' : '#15803d'}; font-size:0.75rem;" onclick="AdminApp.toggleStock(${p.id})">
+                  ${p.isAvailable ? 'Tandai Habis' : 'Tandai Tersedia'}
+                </button>
+              </td>
+            </tr>
+          `).join('');
+        }
+
+        // 4. Render Reports View
+        this.renderReportsView(orders);
+      },
+
+      // 5. Advanced Reports Engine (Daily, Weekly, Monthly)
+      renderReportsView(orders) {
+        let filtered = [];
+        const completed = orders.filter(o => o.status === 'selesai');
+
+        const chartContainer = document.getElementById('chartContainer');
+        const chartLabels = document.getElementById('chartLabels');
+        const chartTitle = document.getElementById('chartTitle');
+        const chartSubtitle = document.getElementById('chartSubtitle');
+
+        if (this.reportPeriod === 'daily') {
+          // Filter by selectedDate
+          filtered = completed.filter(o => {
+            const d = new Date(o.timestamp).toISOString().split('T')[0];
+            return d === this.selectedDate;
+          });
+
+          document.getElementById('reportLblRev').innerText = `Omset Harian (${this.selectedDate})`;
+          chartTitle.innerText = `Grafik Penjualan Harian (${this.selectedDate})`;
+          chartSubtitle.innerText = 'Distribusi Omset per Blok Jam Kerja';
+
+          // Hourly distribution
+          const buckets = [
+            { label: '09:00', min: 9, max: 11, total: 0 },
+            { label: '11:00', min: 11, max: 13, total: 0 },
+            { label: '13:00', min: 13, max: 15, total: 0 },
+            { label: '15:00', min: 15, max: 17, total: 0 },
+            { label: '17:00', min: 17, max: 19, total: 0 },
+            { label: '19:00', min: 19, max: 22, total: 0 }
+          ];
+
+          filtered.forEach(o => {
+            const hour = new Date(o.timestamp).getHours();
+            const b = buckets.find(item => hour >= item.min && hour < item.max) || buckets[buckets.length - 1];
+            b.total += o.total;
+          });
+
+          this.renderChartBars(buckets, chartContainer, chartLabels);
+
+        } else if (this.reportPeriod === 'weekly') {
+          // Last 7 days
+          const nowMs = Date.now();
+          const sevenDaysAgo = nowMs - (7 * 24 * 60 * 60 * 1000);
+
+          filtered = completed.filter(o => {
+            const ms = new Date(o.timestamp).getTime();
+            return ms >= sevenDaysAgo && ms <= nowMs;
+          });
+
+          document.getElementById('reportLblRev').innerText = 'Omset Mingguan (7 Hari Terakhir)';
+          chartTitle.innerText = 'Grafik Penjualan Mingguan (7 Hari Terakhir)';
+          chartSubtitle.innerText = 'Breakdown Omset Harian';
+
+          // Days of week buckets
+          const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+          const buckets = [];
+          for (let i = 6; i >= 0; i--) {
+            const d = new Date(nowMs - i * 24 * 60 * 60 * 1000);
+            const dateStr = d.toISOString().split('T')[0];
+            const dayName = days[d.getDay()];
+            buckets.push({
+              label: `${dayName} (${d.getDate()})`,
+              dateStr: dateStr,
+              total: 0
+            });
+          }
+
+          filtered.forEach(o => {
+            const oDate = new Date(o.timestamp).toISOString().split('T')[0];
+            const b = buckets.find(item => item.dateStr === oDate);
+            if (b) b.total += o.total;
+          });
+
+          this.renderChartBars(buckets, chartContainer, chartLabels);
+
+        } else {
+          // Monthly filter
+          filtered = completed.filter(o => {
+            const m = new Date(o.timestamp).toISOString().slice(0, 7);
+            return m === this.selectedMonth;
+          });
+
+          document.getElementById('reportLblRev').innerText = `Omset Bulanan (${this.selectedMonth})`;
+          chartTitle.innerText = `Grafik Penjualan Bulanan (${this.selectedMonth})`;
+          chartSubtitle.innerText = 'Breakdown Omset per Minggu (Week 1 - 4)';
+
+          const buckets = [
+            { label: 'Minggu 1 (1-7)', min: 1, max: 7, total: 0 },
+            { label: 'Minggu 2 (8-14)', min: 8, max: 14, total: 0 },
+            { label: 'Minggu 3 (15-21)', min: 15, max: 21, total: 0 },
+            { label: 'Minggu 4 (22-31)', min: 22, max: 31, total: 0 }
+          ];
+
+          filtered.forEach(o => {
+            const day = new Date(o.timestamp).getDate();
+            const b = buckets.find(item => day >= item.min && day <= item.max) || buckets[3];
+            b.total += o.total;
+          });
+
+          this.renderChartBars(buckets, chartContainer, chartLabels);
+        }
+
+        // Summary Calculations
+        const totalRev = filtered.reduce((s, o) => s + o.total, 0);
+        const count = filtered.length;
+        const aov = count > 0 ? Math.round(totalRev / count) : 0;
+
+        // Top Item
+        const itemFrequency = {};
+        filtered.forEach(o => {
+          o.items.forEach(i => {
+            itemFrequency[i.name] = (itemFrequency[i.name] || 0) + i.qty;
+          });
+        });
+
+        let topItemName = '-';
+        let maxQty = 0;
+        for (const [name, qty] of Object.entries(itemFrequency)) {
+          if (qty > maxQty) {
+            maxQty = qty;
+            topItemName = `${name} (${qty} terjual)`;
+          }
+        }
+
+        document.getElementById('reportValRev').innerText = `Rp ${totalRev.toLocaleString('id-ID')}`;
+        document.getElementById('reportValCount').innerText = `${count} Transaksi`;
+        document.getElementById('reportValAov').innerText = `Rp ${aov.toLocaleString('id-ID')}`;
+        document.getElementById('reportValTopItem').innerText = topItemName;
+        document.getElementById('reportRowCount').innerText = `${count} Transaksi Selesai`;
+
+        // Render Report Table
+        const repTable = document.getElementById('adminReportsTable');
+        if (repTable) {
+          if (filtered.length === 0) {
+            repTable.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2.5rem; color:#64748b;">Tidak ada data transaksi pada periode ini.</td></tr>`;
+          } else {
+            repTable.innerHTML = filtered.map(o => `
+              <tr>
+                <td><b>#${o.id}</b></td>
+                <td>
+                  <div><b>${new Date(o.timestamp).toLocaleDateString('id-ID', { day:'numeric', month:'short' })}</b></div>
+                  <small style="color:#94a3b8;">${new Date(o.timestamp).toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' })} WIB</small>
+                </td>
+                <td>
+                  <b>${o.customerName}</b>
+                  <div style="font-size:0.75rem; color:#94a3b8;">${o.whatsapp}</div>
+                </td>
+                <td>
+                  <span style="text-transform:capitalize; font-weight:700;">${o.orderType.replace('_', ' ')}</span>
+                  <div style="font-size:0.75rem; color:#a3e635;">${o.tableOrAddress}</div>
+                </td>
+                <td>
+                  <small>
+                    ${o.items.map(i => `
+                      <div>• <b>${i.qty}x</b> ${i.name} ${i.size ? `(${i.size.split(' ')[0]})` : ''}</div>
+                      ${i.toppings && i.toppings.length ? `<div style="color:#94a3b8; padding-left:10px;">Topping: ${i.toppings.join(', ')}</div>` : ''}
+                    `).join('')}
+                  </small>
+                </td>
+                <td>
+                  <span style="background:rgba(255,209,0,0.15); color:var(--yellow); font-weight:800; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px;">
+                    ${o.paymentMethod.toUpperCase()}
+                  </span>
+                </td>
+                <td><b style="color:#4ade80; font-size:0.95rem;">Rp ${o.total.toLocaleString('id-ID')}</b></td>
+                <td><span style="color:#4ade80; font-weight:800; font-size:0.75rem;">✓ SELESAI</span></td>
+              </tr>
+            `).join('');
+          }
+        }
+      },
+
+      renderChartBars(buckets, chartContainer, chartLabels) {
+        if (!chartContainer || !chartLabels) return;
+
+        const maxVal = Math.max(...buckets.map(b => b.total), 10000);
+
+        chartContainer.innerHTML = buckets.map(b => {
+          const heightPercent = Math.max(8, Math.round((b.total / maxVal) * 100));
+          return `
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;">
+              <div style="font-size:0.7rem; font-weight:800; color:var(--yellow); margin-bottom:4px;">
+                ${b.total > 0 ? (b.total >= 1000 ? Math.round(b.total / 1000) + 'k' : b.total) : ''}
+              </div>
+              <div style="width:100%; max-width:44px; height:${heightPercent}%; background:linear-gradient(180deg, #ffd100 0%, #005e2b 100%); border-radius:6px 6px 0 0; transition:height 0.4s ease;" title="${b.label}: Rp ${b.total.toLocaleString('id-ID')}"></div>
+            </div>
+          `;
+        }).join('');
+
+        chartLabels.innerHTML = buckets.map(b => `
+          <div style="flex:1; text-align:center; font-weight:700;">${b.label}</div>
+        `).join('');
+      },
+
+      exportSalesCSV() {
+        const orders = this.getOrders().filter(o => o.status === 'selesai');
+        if (orders.length === 0) {
+          alert('Tidak ada data transaksi selesai untuk diekspor.');
+          return;
+        }
+
+        let csv = '\uFEFF'; // UTF-8 BOM
+        csv += 'No. Pesanan,Tanggal,Jam,Nama Pelanggan,No. WhatsApp,Tipe Pemesanan,Meja / Alamat,Menu Dipesan,Subtotal,Diskon,Biaya Layanan,Total Akhir,Metode Pembayaran,Status\n';
+
+        orders.forEach(o => {
+          const dateObj = new Date(o.timestamp);
+          const dateStr = dateObj.toLocaleDateString('id-ID');
+          const timeStr = dateObj.toLocaleTimeString('id-ID');
+          const itemsStr = o.items.map(i => `${i.qty}x ${i.name} [${i.size || 'Reguler'}]`).join(' | ');
+
+          const row = [
+            `"${o.id}"`,
+            `"${dateStr}"`,
+            `"${timeStr}"`,
+            `"${o.customerName}"`,
+            `"${o.whatsapp}"`,
+            `"${o.orderType}"`,
+            `"${o.tableOrAddress}"`,
+            `"${itemsStr}"`,
+            o.subtotal,
+            o.discount,
+            o.serviceFee,
+            o.total,
+            `"${o.paymentMethod.toUpperCase()}"`,
+            `"${o.status.toUpperCase()}"`
+          ];
+          csv += row.join(',') + '\n';
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `Laporan_Penjualan_EsTehPociMide_${this.reportPeriod}_${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+
+      advanceStatus(orderId, nextStatus) {
+        const orders = this.getOrders();
+        const ord = orders.find(o => o.id === orderId);
+        if (ord) {
+          ord.status = nextStatus;
+          if (nextStatus === 'selesai') {
+            ord.completed_at = new Date().toISOString();
+          }
+          this.saveOrders(orders);
+
+          const activeOrderRaw = localStorage.getItem('poci_active_order');
+          if (activeOrderRaw) {
+            const activeOrder = JSON.parse(activeOrderRaw);
+            if (activeOrder.id === orderId) {
+              activeOrder.status = nextStatus;
+              localStorage.setItem('poci_active_order', JSON.stringify(activeOrder));
+            }
+          }
+        }
+      },
+
+      toggleStock(prodId) {
+        const products = this.getProducts();
+        const prod = products.find(p => p.id === prodId);
+        if (prod) {
+          prod.isAvailable = !prod.isAvailable;
+          this.saveProducts(products);
+        }
+      },
+
+      refreshOrders() {
+        this.renderAll();
+        this.playChime();
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      AdminApp.init();
+    });
+  </script>
+</body>
+</html>
