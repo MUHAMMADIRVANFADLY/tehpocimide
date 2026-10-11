@@ -1,6 +1,5 @@
 /**
  * ES TEH POCI MIDE - APP LOGIC & STATE ENGINE
- * Reference: Mie Gacoan Ordering Experience
  */
 
 // 1. Initial Product Data
@@ -84,7 +83,7 @@ const DEFAULT_PRODUCTS = [
     id: 7,
     name: 'Es Teh Poci Susu Brown Sugar',
     category: 'milky',
-    categoryName: 'Milky & Macchiato',
+    categoryName: 'Milky & Milk Tea',
     price: 10000,
     priceStrike: 12000,
     desc: 'Perpaduan susu segar creamy, teh poci pekat harum, dan lelehan sirup brown sugar legit.',
@@ -95,65 +94,15 @@ const DEFAULT_PRODUCTS = [
     hasCustomization: true
   },
   {
-    id: 8,
-    name: 'Macchiato Jasmine Cheese Cream',
-    category: 'milky',
-    categoryName: 'Milky & Macchiato',
-    price: 11000,
-    desc: 'Es teh melati premium dilapisi foam keju gurih macchiato lembut di atasnya.',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Premium',
-    badgeType: 'special',
-    isAvailable: true,
-    hasCustomization: true
-  },
-  {
-    id: 9,
-    name: 'Pangsit Goreng Crispy Gacoan Mide',
-    category: 'snack',
-    categoryName: 'Snack & Dimsum',
-    price: 10000,
-    desc: 'Pangsit goreng renyah isi olahan ayam udang gurih isi 4 pcs, disajikan dengan saus asam manis pedas.',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Wajib Coba',
-    badgeType: 'bestseller',
-    isAvailable: true,
-    hasCustomization: false
-  },
-  {
-    id: 10,
-    name: 'Siomay Ayam Kukus Lembut',
-    category: 'snack',
-    categoryName: 'Snack & Dimsum',
-    price: 10000,
-    desc: 'Siomay ayam kukus lembut juicy isi 3 pcs dengan taburan wortel dan saus dimsum istimewa.',
-    image: 'assets/images/menu-showcase.jpg',
-    isAvailable: true,
-    hasCustomization: false
-  },
-  {
-    id: 11,
-    name: 'Udang Rambutan Golden Ball',
-    category: 'snack',
-    categoryName: 'Snack & Dimsum',
-    price: 12000,
-    desc: 'Bola udang cincang berbalut kulit pangsit krispi keemasan isi 3 pcs, renyah di luar juicy di dalam.',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Favorit',
-    badgeType: 'special',
-    isAvailable: true,
-    hasCustomization: false
-  },
-  {
     id: 12,
-    name: 'Paket Puas Mide: Teh Jumbo + Pangsit',
+    name: 'Paket Dobel Segar: 2x Es Teh Poci Jumbo',
     category: 'combo',
     categoryName: 'Paket Hemat',
-    price: 14000,
-    priceStrike: 17000,
-    desc: '1x Es Teh Poci Melati Jumbo 22oz + 1 Porsi Pangsit Goreng Crispy isi 4 pcs. Hemat Rp 3.000!',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Hemat 20%',
+    price: 10000,
+    priceStrike: 12000,
+    desc: '2x Es Teh Poci Melati Jumbo 22oz lebih puas dinikmati bersama teman atau keluarga.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Hemat Banget',
     badgeType: 'bestseller',
     isAvailable: true,
     hasCustomization: true
@@ -163,7 +112,7 @@ const DEFAULT_PRODUCTS = [
 // Available Promos
 const AVAILABLE_PROMOS = {
   'POCISEGAR': { code: 'POCISEGAR', discount: 5000, minOrder: 15000, desc: 'Potongan Rp 5.000' },
-  'GACOANMIDE': { code: 'GACOANMIDE', discount: 0.15, isPercent: true, minOrder: 20000, desc: 'Diskon 15%' },
+  'POCISUSU': { code: 'POCISUSU', discount: 0.15, isPercent: true, minOrder: 20000, desc: 'Diskon 15%' },
   'FREEONGKIR': { code: 'FREEONGKIR', discount: 5000, minOrder: 25000, desc: 'Subsidi Ongkir Rp 5.000' }
 };
 
@@ -181,6 +130,14 @@ const AppState = {
   allOrders: [],
 
   init() {
+    // Invalidate old cache if products had old items
+    const APP_VERSION = '2.1';
+    if (localStorage.getItem('poci_app_version') !== APP_VERSION) {
+      localStorage.removeItem('poci_products');
+      localStorage.removeItem('poci_orders');
+      localStorage.setItem('poci_app_version', APP_VERSION);
+    }
+
     // Load products from localStorage or defaults
     const savedProducts = localStorage.getItem('poci_products');
     this.products = savedProducts ? JSON.parse(savedProducts) : DEFAULT_PRODUCTS;
@@ -198,18 +155,18 @@ const AppState = {
       {
         id: 'POCI-10821',
         customerName: 'Budi Santoso',
-        whatsapp: '081234567890',
+        whatsapp: '089650965540',
         orderType: 'dine_in',
         tableOrAddress: 'Meja 04',
         paymentMethod: 'qris',
         items: [
           { name: 'Es Teh Poci Melati Original', qty: 2, size: 'Jumbo (22oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: ['Cincau Hitam'], totalItemPrice: 16000 },
-          { name: 'Pangsit Goreng Crispy Gacoan Mide', qty: 1, totalItemPrice: 10000 }
+          { name: 'Es Teh Lemon Fresh Sultan', qty: 1, size: 'Reguler (16oz)', sugar: 'Normal 100%', ice: 'Normal Ice', toppings: ['Biji Selasih'], totalItemPrice: 8000 }
         ],
-        subtotal: 26000,
+        subtotal: 24000,
         discount: 5000,
         serviceFee: 1000,
-        total: 22000,
+        total: 20000,
         status: 'diproses',
         timestamp: new Date(Date.now() - 1000 * 60 * 12).toISOString()
       },
@@ -320,7 +277,7 @@ const AppState = {
     `).join('');
   },
 
-  // 4. Modal Customizer (Mie Gacoan Style Options)
+  // 4. Modal Customizer
   openProductModal(productId) {
     const product = this.products.find(p => p.id === productId);
     if (!product || !product.isAvailable) return;
@@ -700,7 +657,7 @@ const AppState = {
     this.openTrackingModal(newOrder);
   },
 
-  // 7. Order Live Tracking Modal (Mie Gacoan Real-time Status Tracker)
+  // 7. Order Live Tracking Modal
   openTrackingModal(order) {
     const targetOrder = order || this.activeOrder;
     if (!targetOrder) {
@@ -773,7 +730,7 @@ const AppState = {
         `💳 Metode: ${targetOrder.paymentMethod.toUpperCase()}\n\n` +
         `Mohon segera diproses ya kak. Terima kasih!`
       );
-      waBtn.href = `https://wa.me/6281234567890?text=${text}`;
+      waBtn.href = `https://wa.me/6289650965540?text=${text}`;
     }
 
     modal.classList.add('active');
