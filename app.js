@@ -2,29 +2,31 @@
  * ES TEH POCI MIDE - APP LOGIC & STATE ENGINE
  */
 
-// 1. Initial Product Data
+// 1. Initial Product Data (Sesuai Daftar Menu Asli Es Teh Mide)
 const DEFAULT_PRODUCTS = [
+  // --- KATEGORI 1: ORIGINAL ---
   {
     id: 1,
-    name: 'Es Teh Poci Melati Original',
+    name: 'Es Teh Original (Cup Besar)',
     category: 'original',
     categoryName: 'Teh Original',
     price: 4000,
-    priceStrike: 5000,
-    desc: 'Seduhan daun teh melati pilihan khas Poci, aroma wangi melati alami yang sejuk dan menyegarkan.',
+    desc: 'Seduhan daun teh melati asli poci tanah liat khas Poci Mide. Harum, sejuk, dan menyegarkan dahaga.',
     image: 'assets/images/hero-banner.jpg',
     badge: 'Best Seller',
     badgeType: 'bestseller',
     isAvailable: true,
     hasCustomization: true
   },
+
+  // --- KATEGORI 2: RASA ---
   {
     id: 2,
-    name: 'Es Teh Poci Klasik Gula Batu',
-    category: 'original',
-    categoryName: 'Teh Original',
+    name: 'Es Teh Rasa Apel',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
     price: 5000,
-    desc: 'Racikan otentik poci tanah liat dipadukan dengan manis legit khas gula batu alami Solo-Tegal.',
+    desc: 'Perpaduan teh melati harum khas Poci dengan rasa buah apel segar manis.',
     image: 'assets/images/hero-banner.jpg',
     badge: 'Favorit',
     badgeType: 'special',
@@ -33,76 +35,266 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id: 3,
-    name: 'Es Teh Poci Pandan Wangi',
-    category: 'original',
-    categoryName: 'Teh Original',
+    name: 'Es Teh Rasa Blackcurrant',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
     price: 5000,
-    desc: 'Teh hitam Poci dengan rebusan daun pandan wangi asli, rasa manis lembut menenangkan.',
+    desc: 'Sensasi manis dan asam segar buah blackcurrant berpadu seduhan teh poci dingin.',
     image: 'assets/images/hero-banner.jpg',
     isAvailable: true,
     hasCustomization: true
   },
   {
     id: 4,
-    name: 'Es Teh Lemon Fresh Sultan',
-    category: 'fruit',
-    categoryName: 'Fruity Tea',
-    price: 7000,
-    desc: 'Perpaduan teh melati harum dengan perasan sari lemon segar asli dan irisan lemon kuning impor.',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Favorit',
-    badgeType: 'bestseller',
+    name: 'Es Teh Rasa Jambu',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Cita rasa manis wangi khas buah jambu biji berpadu kepekatan teh poci alami.',
+    image: 'assets/images/hero-banner.jpg',
     isAvailable: true,
     hasCustomization: true
   },
   {
     id: 5,
-    name: 'Es Teh Poci Leci Sultan',
-    category: 'fruit',
-    categoryName: 'Fruity Tea',
-    price: 9000,
-    desc: 'Sensasi rasa mewah buah leci manis dengan buah leci utuh dan rainbow crystal jelly kenyal.',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Viral',
+    name: 'Es Teh Rasa Jeruk',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Kesegaran rasa jeruk segar alami yang sejuk dipadukan racikan teh poci melati.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Favorit',
     badgeType: 'special',
     isAvailable: true,
     hasCustomization: true
   },
   {
     id: 6,
-    name: 'Es Teh Mangga Tropis Mide',
-    category: 'fruit',
-    categoryName: 'Fruity Tea',
-    price: 8000,
-    desc: 'Kombinasi teh poci dengan puree mangga harum manis tropis, manis segar mengguncang dahaga.',
-    image: 'assets/images/menu-showcase.jpg',
-    isAvailable: true,
-    hasCustomization: true
-  },
-  {
-    id: 7,
-    name: 'Es Teh Poci Susu Brown Sugar',
-    category: 'milky',
-    categoryName: 'Milky & Milk Tea',
-    price: 10000,
-    priceStrike: 12000,
-    desc: 'Perpaduan susu segar creamy, teh poci pekat harum, dan lelehan sirup brown sugar legit.',
-    image: 'assets/images/menu-showcase.jpg',
-    badge: 'Rekomendasi',
+    name: 'Es Teh Rasa Leci',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Aroma wangi mewah buah leci manis menyegarkan yang jadi favorit banyak orang.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Best Seller',
     badgeType: 'bestseller',
     isAvailable: true,
     hasCustomization: true
   },
   {
-    id: 12,
-    name: 'Paket Dobel Segar: 2x Es Teh Poci Jumbo',
-    category: 'combo',
-    categoryName: 'Paket Hemat',
-    price: 10000,
-    priceStrike: 12000,
-    desc: '2x Es Teh Poci Melati Jumbo 22oz lebih puas dinikmati bersama teman atau keluarga.',
+    id: 7,
+    name: 'Es Teh Rasa Lemon',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Sensasi asam manis segar buah lemon yang bikin dahaga langsung hilang seketika.',
     image: 'assets/images/hero-banner.jpg',
-    badge: 'Hemat Banget',
+    badge: 'Best Seller',
+    badgeType: 'bestseller',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 8,
+    name: 'Es Teh Rasa Mangga',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Manis harum buah mangga tropis berpadu seduhan teh poci melati dingin.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Favorit',
+    badgeType: 'special',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 9,
+    name: 'Es Teh Green Tea',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Aroma teh hijau alami yang sejuk dan menenangkan dengan racikan khas Poci Mide.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 10,
+    name: 'Es Teh Milo',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Rasa cokelat malt Milo favorit berpadu teh segar yang manis dan creamy.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Favorit',
+    badgeType: 'special',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 11,
+    name: 'Es Teh Oren',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Sensasi rasa jeruk oren manis menyegarkan, nikmat diminum saat cuaca terik.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 12,
+    name: 'Es Teh Taro',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 5000,
+    desc: 'Cita rasa talas taro ungu yang gurih manis lembut dipadu dinginnya teh poci.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Viral',
+    badgeType: 'special',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 13,
+    name: 'Es Teh Capuccino',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 6000,
+    desc: 'Perpaduan kopi capuccino creamy dengan racikan teh poci melati yang mantap.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 14,
+    name: 'Es Teh Cokelat',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 6000,
+    desc: 'Manis legit cokelat pekat berpadu seduhan teh segar dingin yang lezat.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 15,
+    name: 'Es Teh Thai Tea',
+    category: 'rasa',
+    categoryName: 'Varian Rasa',
+    price: 6500,
+    desc: 'Racikan teh rempah khas Thailand yang pekat dan legit dengan aroma khas memikat.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Best Seller',
+    badgeType: 'bestseller',
+    isAvailable: true,
+    hasCustomization: true
+  },
+
+  // --- KATEGORI 3: MIX SUSU ---
+  {
+    id: 16,
+    name: 'Es Teh Original + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Teh melati poci otentik dipadukan susu kental manis gurih legit dan lembut.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Best Seller',
+    badgeType: 'bestseller',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 17,
+    name: 'Es Teh Apel + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Perpaduan buah apel manis dan susu kental manis lembut yang menyegarkan.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 18,
+    name: 'Es Teh Blackcurrant + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Asam manis buah blackcurrant dipadukan susu creamy lembut nikmat.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 19,
+    name: 'Es Teh Jambu + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Aroma wangi jambu biji dipadukan kelembutan susu creamy yang legit.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 20,
+    name: 'Es Teh Jeruk + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Sensasi unik kesegaran jeruk dipadukan rasa susu gurih creamy yang nagih.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 21,
+    name: 'Es Teh Leci + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Wangi manis leci berpadu kelembutan susu kental manis favorit pelanggan.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Favorit',
+    badgeType: 'special',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 22,
+    name: 'Es Teh Lemon + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Segarnya rasa lemon dipadu sentuhan susu manis creamy yang pas di lidah.',
+    image: 'assets/images/hero-banner.jpg',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 23,
+    name: 'Es Teh Mangga + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 8000,
+    desc: 'Manis buah mangga tropis dipadukan susu creamy lezat yang bikin ketagihan.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Favorit',
+    badgeType: 'special',
+    isAvailable: true,
+    hasCustomization: true
+  },
+  {
+    id: 24,
+    name: 'Es Thai Tea + Susu',
+    category: 'mix',
+    categoryName: 'Mix Susu',
+    price: 9500,
+    desc: 'Spesial seduhan Thai Tea pekat berpadu ekstra susu kental manis creamy autentik.',
+    image: 'assets/images/hero-banner.jpg',
+    badge: 'Rekomendasi',
     badgeType: 'bestseller',
     isAvailable: true,
     hasCustomization: true
@@ -130,8 +322,8 @@ const AppState = {
   allOrders: [],
 
   init() {
-    // Invalidate old cache if products had old items
-    const APP_VERSION = '2.1';
+    // Invalidate old cache so browser loads fresh actual menu
+    const APP_VERSION = '3.0';
     if (localStorage.getItem('poci_app_version') !== APP_VERSION) {
       localStorage.removeItem('poci_products');
       localStorage.removeItem('poci_orders');
